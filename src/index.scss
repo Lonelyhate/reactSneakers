@@ -48,39 +48,6 @@ code {
     margin: 50px auto;
 }
 
-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 40px;
-    border-bottom: 1px solid #EAEAEA;
-    h3{
-        text-transform: uppercase;
-    }
-}
-.headerLeft{
-    display: flex;
-    align-items: center;
-    img{
-        margin-right: 15px;
-    }
-}
-.headerRight{
-    display: flex;
-    li{
-        display: flex;
-        align-items: center;
-        &:first-child{
-            img{
-                margin-right: 10px;
-            }
-        }
-        &:not(:last-child) {
-            margin-right: 30px;
-        }
-    }
-}
-
 .content{
     padding: 40px;
     h1{
@@ -91,6 +58,7 @@ header{
 
 .sneakers{
     display: flex;
+    flex-wrap: wrap;
 }
 
 .sheakersHeader{

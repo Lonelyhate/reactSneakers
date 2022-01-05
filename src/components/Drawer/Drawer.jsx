@@ -1,13 +1,15 @@
+import styles from './Drawer.module.scss'
+
 const Drawer = () => {
     return (
-        <div style={{display: 'none'}} className="overlay">
-            <div className="drawer">
+        <div style={{}} className={styles.overlay}>
+            <div className={styles.drawer}>
                 <h2>Корзина <img src="img/btn-remove.svg" alt="remove" /></h2>
-                <div className="items">
-                    <div className="cartItem">
+                <div className={styles.items}>
+                    <div className={styles.cartItem}>
                         <div 
                             style={{backgroundImage: 'url(img/sneakers/1.jpg)'}} 
-                            className="cartItemImg">
+                            className={styles.cartItemImg}>
                         </div>
                         <div>
                             <p>Мужские Кроссовки Nike Air Max 270</p>
@@ -17,7 +19,7 @@ const Drawer = () => {
                     </div>
                 </div>
 
-                <div className="cartTotalBlock">
+                <div className={styles.cartTotalBlock}>
                     <ul>
                         <li>
                             <span>Итого: </span>
@@ -30,7 +32,7 @@ const Drawer = () => {
                             <b>1074 руб. </b>
                         </li>
                     </ul>
-                    <button className="greenButton">
+                    <button className={styles.greenButton}>
                         Оформить заказ
                         <img src="img/arrow-right.svg" alt="arrow"/>
                     </button>

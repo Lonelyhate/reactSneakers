@@ -83,6 +83,11 @@ code {
         outline: none;
         width: 200px;
     }
+    img{
+        &:last-child{
+            cursor: pointer;
+        }
+    }
 }
 
 .greenButton{

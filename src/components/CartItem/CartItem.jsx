@@ -11,7 +11,7 @@ const CartItem = (props) => {
                 <p>{props.title}</p>
                 <b>{props.price}</b>
             </div>
-            <button><img src="img/btn-remove.svg" alt="remove" /></button>
+            <button onClick={() => props.onRemove(props.id)} ><img src="img/btn-remove.svg" alt="remove" /></button>
         </div>
     )
 }

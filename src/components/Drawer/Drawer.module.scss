@@ -18,6 +18,11 @@
     padding: 30px;
     display: flex;
     flex-direction: column;
+    & > div{
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
     .items{
         overflow-y: auto;
     }
@@ -37,6 +42,7 @@
 }
 
 .cartTotalBlock{
+    margin-top: auto;
     ul{
         margin-bottom: 24px;
         li{
@@ -62,6 +68,9 @@
     }
     .greenButton{
         position: relative;
+        &:disabled{
+            animation: button-loading 0.6s ease-in-out infinite;
+        }
         img{
             position: absolute;
             top: 50%;
@@ -72,5 +81,17 @@
         &:hover img{
             right: 25px;
         }
+    }
+}
+
+@keyframes button-loading {
+    0%{
+        opacity: 1;
+    }
+    50%{
+        opacity: 0.7;
+    }
+    100%{
+        opacity: 1;
     }
 }

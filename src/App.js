@@ -8,6 +8,7 @@ import {Route,
         } from "react-router-dom";
 import axios from "axios";
 import Favorites from "./pages/Favorites";
+import Orders from "./pages/Orders";
 
 function App() {
 
@@ -20,16 +21,16 @@ function App() {
 
     React.useEffect(() => {
        async function fetchData() {
-            setIsLoading(true)
-            const cartResponse = await axios.get('https://61d5ce4a2b4f730017a82a71.mockapi.io/cart')
-            const favoritesResponse = await axios.get('https://61d5ce4a2b4f730017a82a71.mockapi.io/favorites')
-            const itemsResponse = await axios.get('https://61d5ce4a2b4f730017a82a71.mockapi.io/items')
+            try {
+                setIsLoading(true)
+                const [cartResponse, favoritesResponse, itemsResponse] = await Promise.all([axios.get('https://61d5ce4a2b4f730017a82a71.mockapi.io/cart'), axios.get('https://61d5ce4a2b4f730017a82a71.mockapi.io/favorites'), axios.get('https://61d5ce4a2b4f730017a82a71.mockapi.io/items')])
 
-            setIsLoading(false)
+                setIsLoading(false)
 
-            setCartItems(cartResponse.data)
-            setItems(itemsResponse.data)
-            setFavorites(favoritesResponse.data)
+                setCartItems(cartResponse.data)
+                setItems(itemsResponse.data)
+                setFavorites(favoritesResponse.data)
+            } catch(error) {alert('ошибка при запросе данных')}
        }
 
        fetchData()
@@ -77,7 +78,7 @@ function App() {
   return (
     <AppContext.Provider value={{cartItems, favorites, items, onAddToFavorite, onClickClose, setCartItems}}>
         <div className="wrapper">
-            {cartOpened && <Drawer items={cartItems} onRemove={onRemoveItem}/>}
+            <Drawer opened={cartOpened} items={cartItems} onRemove={onRemoveItem}/>
             <Header onClickCart={() => setCartOpened(true)} />
             
             <Routes>
@@ -100,6 +101,12 @@ function App() {
                         <Favorites 
                             onAddToCart={onAddToCart}
                         />
+                    }
+                />
+                <Route
+                    path='orders'
+                    element={
+                        <Orders/>
                     }
                 />
                     

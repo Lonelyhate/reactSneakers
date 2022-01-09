@@ -1,12 +1,17 @@
+import React from 'react'
 import { Link } from 'react-router-dom'
+import { useCart } from '../../hooks/useCart'
 import styles from './Header.module.scss'
 
 const Header = (props) => {
 
-    const cartOpenClick = () => {
+    const { totalPrice } = useCart()
+
+    const cartOpenClick = (e) => {
         props.onClickCart()
         
         document.body.style.overflow = 'hidden'
+        
     }
 
     return (
@@ -23,7 +28,7 @@ const Header = (props) => {
             <ul className={styles.headerRight}>
                 <li onClick={cartOpenClick}>
                     <img width={18} height={18} src="img/cart.svg" />
-                    <span>1205 руб.</span>
+                    <span>{totalPrice}</span>
                 </li>
                 <li>
                     <Link to="/favorites">
@@ -31,7 +36,9 @@ const Header = (props) => {
                     </Link>
                 </li>
                 <li>
-                    <img width={18} height={18} src="img/user.svg" />
+                    <Link to="/orders">
+                        <img width={18} height={18} src="img/user.svg" />
+                    </Link>
                 </li>
 
             </ul>

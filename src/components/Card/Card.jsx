@@ -3,7 +3,7 @@ import styles from './Card.module.scss'
 import ContentLoader from 'react-content-loader'
 import AppContext from '../../context'
 
-const Card = ({favorited = false, added, loading = false, onPlus, onFavorite, ...props}) => {
+const Card = ({favorited = false, added, loading = false, onPlus=false, onFavorite=false, ...props}) => {
     const {cartItems} = React.useContext(AppContext)
 
     const [isFavorite, setIsFavorite] = React.useState(favorited)
@@ -43,9 +43,11 @@ const Card = ({favorited = false, added, loading = false, onPlus, onFavorite, ..
                 ) 
                 :
                 (   <>
-                    <div className={styles.favorite} onClick={onClickFavorite}>
-                    <img src={isFavorite ? 'img/heart-liked.svg' : 'img/heart-unliked.svg'}></img>
-                    </div>
+                    {onFavorite && 
+                        <div className={styles.favorite} onClick={onClickFavorite}>
+                            <img src={isFavorite ? 'img/heart-liked.svg' : 'img/heart-unliked.svg'} />
+                        </div>
+                    }
                     <img width={133} height={112} src={props.imageUrl} alt="Кроссовки"></img>
                     <h5>{props.title}</h5>
                     <div className={styles.cardBottom}>
@@ -53,13 +55,13 @@ const Card = ({favorited = false, added, loading = false, onPlus, onFavorite, ..
                             <span>Цена:</span>
                             <b>{props.price} руб.</b>
                         </div>
-                        <img 
+                        {onPlus && <img 
                             onClick={onClickPlus} 
                             width={32} 
                             height={32} 
                             src={isItemAdded(props.id) ? 'img/btn-checked.svg' : 'img/plus.svg'}
                             alt='plus'
-                        />
+                        />}
                     </div>
                     </>
                 )

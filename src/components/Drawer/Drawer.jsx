@@ -1,15 +1,16 @@
 import axios from 'axios'
 import React from 'react'
 import AppContext from '../../context'
+import { useCart } from '../../hooks/useCart'
 import CartItem from '../CartItem/CartItem'
 import Emptiness from '../Info/Info'
 import styles from './Drawer.module.scss'
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-const Drawer = ({ items = [], onRemove}) => {
-
-    const {onClickClose, setCartItems, cartItems} =  React.useContext(AppContext)
+const Drawer = ({ items = [], onRemove, opened}) => {
+    const { cartItems, setCartItems, totalPrice } = useCart()
+    const {onClickClose} =  React.useContext(AppContext)
     const [orderId, setOrderId] = React.useState(null)
     const [isOrderComplate, setOrderIsComplate] = React.useState(false)
     const [isLoading, setIsLodading] = React.useState(false)
@@ -22,20 +23,22 @@ const Drawer = ({ items = [], onRemove}) => {
             })
             setOrderId(data.id)
             setOrderIsComplate(true)
-            setCartItems([])
 
             for (let i = 0; i < cartItems.length; i++) {
-                await axios.delete(`https://61d5ce4a2b4f730017a82a71.mockapi.io/cart/${cartItems[i].id}`)
+                await axios.delete(`https://61d5ce4a2b4f730017a82a71.mockapi.io/cart/${i + 1}`)
                 await delay(1000)
+                
             }
+
+            setCartItems([])
 
         }catch(error) {alert('не удалось создать заказ')}
         setIsLodading(false)
     }
 
     return (
-        <div className={styles.overlay} onClick={onClickClose}>
-            <div onClick={(e) => e.stopPropagation()} className={styles.drawer}>
+        <div className={`${styles.overlay} ${opened ? styles.overlayActive : ''}`} onClick={onClickClose}>
+            <div onClick={(e) => e.stopPropagation()} className={`${styles.drawer} ${opened ? styles.drawerActive : ''}`}>
                 <h2>Корзина <img onClick={onClickClose} src="img/btn-remove.svg" alt="remove" /></h2>
                 {
                     items.length > 0 ? (
@@ -57,12 +60,12 @@ const Drawer = ({ items = [], onRemove}) => {
                                 <li>
                                     <span>Итого: </span>
                                     <div></div>
-                                    <b>21 498 руб.</b>
+                                    <b>{totalPrice} руб.</b>
                                 </li>
                                 <li>
                                     <span>Налог 5%: </span>
                                     <div></div>
-                                    <b>1074 руб. </b>
+                                    <b>{Math.round(totalPrice / 100 * 5)} руб. </b>
                                 </li>
                             </ul>
                             <button disabled={isLoading} onClick={onClickOrder} className={[styles.greenButton, 'greenButton'].join(' ')}>
